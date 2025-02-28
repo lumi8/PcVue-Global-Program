@@ -25,37 +25,12 @@ The idea is to create and share the best global SCADA Basic program
 
 * Use a prefix to indicate the type of the variables:
 ```
-Dim iIndex As Integer;
-Dim dCounter As Double;
-Dim sName As str;
-```
-
-* Use CamelCase for variable names and function names:
-```
-sub ComboGetText()
-
-Dim sCbxText As Str;
-Dim sCbxData As Str;
-Dim lRet As Long;
-Dim lCount As Long;
-Dim sCurrentMimic as str;
-
-G_Trace("Control, ComboGetText");
-sCurrentMimic = Window("CURRENTNAME");
-Print("Current mimic : ", sCurrentMimic);
-lRet = ComboBox("GETSELECTEDINDEX", sCurrentMimic, "", "AIComboBox1"); 
-
-sCbxText = ComboBox("GETTEXT", sCurrentMimic, "", "AIComboBox1", lRet); 
-sCbxData = ComboBox("GETUSERDATA", sCurrentMimic, "", "AIComboBox1", lRet); 
-lCount = ComboBox("COUNT", sCurrentMimic, "", "AIComboBox1"); 
-
-@combocontroldata = sCbxData;
-@combocontroltext = sCbxText;
-@combocount = Toc(lCount);
-
-ComboBox("SETSELECTEDINDEX", sCurrentMimic, "", "AIComboBox1", lRet); 
-
-end sub
+Dim i_index As Integer;
+Dim l_handle As Long;
+Dim ll_result As LongLong;
+Dim si_nb_room As Single;
+Dim d_counter As Double;
+Dim s_name As Str;
 ```
 
 * Use UPPER_CASE to declare constants:
@@ -63,21 +38,50 @@ end sub
 Const MY_CONSTANT = 23;
 ```
 
-* Add a prefix G_ before variable name in global program:
+* Use snake_case for variable and function names:
 ```
-Dim G_iCyclic10sec As Integer;
-Dim G_sSeedOfficeStandard As Str;
-Dim G_sSeedOfficeOpenSpace As Str;
-Dim G_sSeedOfficeMeetingRoom As Str;
+Sub combo_get_text()
+
+Dim s_cbx_text As Str;
+Dim s_cbx_data As Str;
+Dim l_ret As Long;
+Dim l_count As Long;
+Dim s_current_mimic as str;
+
+G_trace("Control, combo_get_text");
+s_current_mimic = Window("CURRENTNAME");
+Print("Current mimic : ", s_current_mimic);
+l_ret = ComboBox("GETSELECTEDINDEX", s_current_mimic, "", "AIComboBox1"); 
+
+s_cbx_text = ComboBox("GETTEXT", s_current_mimic, "", "AIComboBox1", l_ret); 
+s_cbx_data = ComboBox("GETUSERDATA", s_current_mimic, "", "AIComboBox1", l_ret); 
+l_count = ComboBox("COUNT", s_current_mimic, "", "AIComboBox1"); 
+
+@combocontroldata = s_cbx_data;
+@combocontroltext = s_cbx_text;
+@combocount = Toc(l_count);
+
+ComboBox("SETSELECTEDINDEX", s_current_mimic, "", "AIComboBox1", l_ret); 
+
+End Sub
+```
+
+* Add a prefix G_ before variables and functions in global program:
+```
+Dim G_i_cyclic_10_sec As Integer;
+Dim G_s_seed_office_standard As Str;
 
 Const G_MAX_DATASET = 100;
 Const G_MAX_BUILDING = 1;
 Const G_MAX_FLOOR = 10;
 Const G_MAX_OFFICE = 5;
 
-Dim G_iTraceEnable As Integer;
-Dim G_sProjectPath As Str;
-Dim G_siNbDesk As Single;
+Dim G_i_trace_enable As Integer;
+Dim G_si_nb_desk As Single;
+
+Sub G_trace(trace)
+'…
+End Sub
 ```
 ### Items
 
@@ -85,11 +89,11 @@ Dim G_siNbDesk As Single;
 * Use UPPERCASE for instruction’s modes:
 ```
 Trace("LOG","Message");
-AlarmDisplay("FILTER", sWindow, sBranch, sIdentity, sFilter);
-sCurrentMimic = Window("CURRENTNAME");
+AlarmDisplay("FILTER", s_window, s_branch, s_identity, s_filter);
+s_current_mimic = Window("CURRENTNAME");
 ```
 * Add a space after a comma:
 ```
-AlarmDisplay("FILTER", sWindow, sBranch, sIdentity, sFilter);
+AlarmDisplay("FILTER", s_window, s_branch, s_identity, s_filter);
 ```
 
